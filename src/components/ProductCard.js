@@ -6,18 +6,21 @@ import React from 'react';
  * Props:
  *  - product: object { id, title, price, image, images, short, description }
  *  - onAdd: optional callback (product) => {}
+ *  - onPreview: optional callback (product) => {}
  */
-export default function ProductCard({ product, onAdd }) {
+export default function ProductCard({ product, onAdd, onPreview }) {
   const handleAdd = () => {
     if (typeof onAdd === 'function') {
       onAdd(product);
     } else {
-      // simple fallback stub for now
       alert(`${product.title} added to cart (client-side stub)`);
     }
   };
 
-  // Build a simple srcSet if product.images provided, else fallback to product.image
+  const handlePreview = () => {
+    if (typeof onPreview === 'function') onPreview(product);
+  };
+
   const srcSet = (product.images && product.images.length)
     ? product.images.map((src, i) => `${src} ${Math.min(400 * (i + 1), 1200)}w`).join(', ')
     : `${product.image} 800w`;
@@ -26,7 +29,6 @@ export default function ProductCard({ product, onAdd }) {
     <article className="card h-100 shadow-sm" aria-labelledby={`product-${product.id}-title`}>
       <div style={{ height: 220, overflow: 'hidden' }}>
         <picture>
-          {/* If you provide webp variants in product.images, prefer those in source */}
           <source srcSet={product.image?.replace(/\.(jpe?g|png)$/i, '.webp')} type="image/webp" />
           <img
             src={product.image}
@@ -35,6 +37,8 @@ export default function ProductCard({ product, onAdd }) {
             className="card-img-top"
             loading="lazy"
             onError={(e) => { e.target.src = '/products/placeholder.png'; }}
+            style={{ cursor: 'pointer' }}
+            onClick={handlePreview}
           />
         </picture>
       </div>
@@ -47,16 +51,26 @@ export default function ProductCard({ product, onAdd }) {
           {product.short || product.description}
         </p>
 
-        <div className="mt-auto d-flex justify-content-between align-items-center">
+        <div className="mt-auto d-flex gap-2 justify-content-between align-items-center">
           <div><strong>${Number(product.price).toFixed(2)}</strong></div>
-          <button
-            type="button"
-            className="btn btn-success btn-sm"
-            onClick={handleAdd}
-            aria-label={`Add ${product.title} to cart`}
-          >
-            Add to cart
-          </button>
+          <div className="d-flex gap-2">
+            <button
+              type="button"
+              className="btn btn-outline-secondary btn-sm"
+              onClick={handlePreview}
+              aria-label={`Preview ${product.title}`}
+            >
+              Quick view
+            </button>
+            <button
+              type="button"
+              className="btn btn-success btn-sm"
+              onClick={handleAdd}
+              aria-label={`Add ${product.title} to cart`}
+            >
+              Add to cart
+            </button>
+          </div>
         </div>
       </div>
     </article>

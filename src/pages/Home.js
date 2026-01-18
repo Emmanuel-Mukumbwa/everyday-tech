@@ -1,11 +1,39 @@
 // src/pages/Home.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import products from '../data/products';
 import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
+import ProductModal from '../components/ProductModal';
+import { CartProvider, useCart } from '../context/CartContext';
 
-/* ---------- Page Export ---------- */
-export default function Home() {
+/* Small inner component to show a confirmation toast-like message (simple) */
+function AddConfirm({ item }) {
+  if (!item) return null;
+  return (
+    <div className="position-fixed bottom-0 end-0 m-3">
+      <div className="alert alert-success py-2 px-3 shadow-sm" role="status">
+        Added <strong>{item.title}</strong> to cart
+      </div>
+    </div>
+  );
+}
+
+function HomeInner() {
+  const [selected, setSelected] = useState(null);
+  const [recent, setRecent] = useState(null);
+  const { addItem } = useCart();
+
+  const handleAdd = (product) => {
+    addItem(product, 1);
+    setRecent(product);
+    setTimeout(() => setRecent(null), 2200);
+  };
+
+  const handlePreview = (product) => {
+    setSelected(product);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <main>
       <Hero />
@@ -32,7 +60,7 @@ export default function Home() {
         <div className="row row-cols-1 row-cols-md-3 g-4">
           {products && products.map(p => (
             <div key={p.id} className="col">
-              <ProductCard product={p} />
+              <ProductCard product={p} onAdd={handleAdd} onPreview={handlePreview} />
             </div>
           ))}
         </div>
@@ -67,23 +95,32 @@ export default function Home() {
           <div className="col-md-8 text-center">
             <h3>Get 10% off your first order</h3>
             <p className="text-muted">Join our newsletter for product drops and promos.</p>
-            <form
-              className="d-flex gap-2 justify-content-center"
-              onSubmit={(e) => { e.preventDefault(); alert('Thanks! (replace with real submission)'); }}
-            >
-              <input
-                type="email"
-                required
-                className="form-control w-50"
-                placeholder="Your email"
-                aria-label="Email address"
-              />
+            <form className="d-flex gap-2 justify-content-center" onSubmit={(e) => { e.preventDefault(); alert('Thanks! (replace with real submission)'); }}>
+              <input type="email" required className="form-control w-50" placeholder="Your email" aria-label="Email address" />
               <button className="btn btn-success" type="submit">Subscribe</button>
             </form>
             <div className="mt-2 small text-muted">We respect your inbox. Unsubscribe anytime.</div>
           </div>
         </div>
       </section>
+
+      <ProductModal
+        product={selected}
+        open={!!selected}
+        onClose={() => setSelected(null)}
+        onAdd={(p) => { handleAdd(p); setSelected(null); }}
+      />
+
+      <AddConfirm item={recent} />
     </main>
+  );
+}
+
+/* Export wrapped with CartProvider */
+export default function Home() {
+  return (
+    <CartProvider>
+      <HomeInner />
+    </CartProvider>
   );
 }

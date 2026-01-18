@@ -1,10 +1,10 @@
-// src/components/Navbar.js
+// src/components/Navbar.jsx
 import React, { useState } from 'react';
+import CartWidget from './CartWidget';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
-  // Close menu when a link is clicked (useful for anchor links on single-page)
   const handleLinkClick = () => setOpen(false);
 
   return (
@@ -25,7 +25,7 @@ export default function Navbar() {
           </button>
 
           <div className={`collapse navbar-collapse ${open ? 'show' : ''}`} id="navMenu">
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
               <li className="nav-item">
                 <a className="nav-link" href="#features" onClick={handleLinkClick}>Features</a>
               </li>
@@ -37,6 +37,9 @@ export default function Navbar() {
               </li>
               <li className="nav-item d-flex align-items-center">
                 <a className="btn btn-outline-light ms-2" href="#shop" onClick={handleLinkClick}>Shop</a>
+              </li>
+              <li className="nav-item d-flex align-items-center">
+                <CartWidget />
               </li>
             </ul>
           </div>

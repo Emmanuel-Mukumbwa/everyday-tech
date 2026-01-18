@@ -74,5 +74,5 @@ export default function CartWidget() {
         </div>
       )}
     </div>
-  );
+  ); 
 }

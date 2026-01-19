@@ -4,7 +4,7 @@ import products from '../data/products';
 import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
 import ProductModal from '../components/ProductModal';
-import { CartProvider, useCart } from '../context/CartContext';
+import { useCart } from '../context/CartContext';
 
 /* Small inner component to show a confirmation toast-like message (simple) */
 function AddConfirm({ item }) {
@@ -18,7 +18,7 @@ function AddConfirm({ item }) {
   );
 }
 
-function HomeInner() {
+export default function Home() {
   const [selected, setSelected] = useState(null);
   const [recent, setRecent] = useState(null);
   const { addItem } = useCart();
@@ -113,14 +113,5 @@ function HomeInner() {
 
       <AddConfirm item={recent} />
     </main>
-  );
-}
-
-/* Export wrapped with CartProvider */
-export default function Home() {
-  return (
-    <CartProvider>
-      <HomeInner />
-    </CartProvider>
   );
 }

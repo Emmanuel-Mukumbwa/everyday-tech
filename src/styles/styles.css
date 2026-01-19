@@ -47,3 +47,46 @@
 .alert-success {
   opacity: 0.96;
 }
+
+/* Off-canvas cart drawer */
+.cart-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1040;
+  background: rgba(0,0,0,0.45);
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1045;
+  width: 380px;
+  max-width: 100%;
+  height: 100%;
+  background: #fff;
+  box-shadow: -12px 0 30px rgba(0,0,0,0.16);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Responsive: full-screen drawer on small screens */
+@media (max-width: 576px) {
+  .cart-drawer {
+    width: 100%;
+  }
+}
+
+.cart-drawer-header { background: #f8f9fa; }
+.cart-drawer-body { flex: 1 1 auto; padding: 1rem; }
+.cart-drawer-footer { background: #fff; }
+
+/* tweak scroll inside body so footer stays visible */
+.cart-drawer-body::-webkit-scrollbar {
+  width: 8px;
+}
+.cart-drawer-body::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 8px;
+}

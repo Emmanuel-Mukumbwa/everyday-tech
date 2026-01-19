@@ -17,6 +17,8 @@ export function CartProvider({ children }) {
     }
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     try {
       localStorage.setItem('everydaytech_cart_v1', JSON.stringify(items));
@@ -40,13 +42,17 @@ export function CartProvider({ children }) {
   };
 
   const updateQuantity = (productId, quantity) => {
-    setItems(prev => prev.map(i => i.id === productId ? { ...i, quantity } : i));
+    setItems(prev => prev.map(i => i.id === productId ? { ...i, quantity: Math.max(1, quantity) } : i));
   };
 
   const clear = () => setItems([]);
 
   const totalCount = items.reduce((s, it) => s + (it.quantity || 0), 0);
   const totalPrice = items.reduce((s, it) => s + (it.price * (it.quantity || 0)), 0);
+
+  const openCart = () => setIsOpen(true);
+  const closeCart = () => setIsOpen(false);
+  const toggleCart = () => setIsOpen(prev => !prev);
 
   const value = {
     items,
@@ -56,6 +62,11 @@ export function CartProvider({ children }) {
     clear,
     totalCount,
     totalPrice,
+    // drawer controls
+    isOpen,
+    openCart,
+    closeCart,
+    toggleCart
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

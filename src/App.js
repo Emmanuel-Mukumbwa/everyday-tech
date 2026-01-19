@@ -8,9 +8,11 @@ import { CartProvider } from './context/CartContext';
 // Components 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CartDrawer from './components/CartDrawer';
 
 // Pages
 import Home from './pages/Home';
+import Checkout from './pages/Checkout';
 
 function App() {
   return (
@@ -22,11 +24,13 @@ function App() {
           <main className="flex-fill">
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* future routes: /product/:id, /cart, /checkout, /about */}
+              <Route path="/checkout" element={<Checkout />} />
+              {/* future routes: /product/:id, /cart, /about */}
             </Routes>
           </main>
 
           <Footer />
+          <CartDrawer />
         </div>
       </Router>
     </CartProvider>

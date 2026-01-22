@@ -11,28 +11,23 @@ import { useToast } from '../context/ToastContext';
  *  - onPreview: optional callback (product) => {}
  */
 export default function ProductCard({ product, onAdd, onPreview }) {
-  const toastCtx = (() => {
-    try {
-      return useToast();
-    } catch {
-      return null;
-    }
-  })();
+  // Call hook at top-level (no conditional/inside-callback) to satisfy rules-of-hooks
+  const toastCtx = useToast(); // may be undefined if provider not mounted
   const addToast = toastCtx?.addToast;
 
   const handleAdd = () => {
     if (typeof onAdd === 'function') {
       onAdd(product);
-      // parent will usually show toast (e.g., Home). Do not duplicate here.
+      // Parent typically handles toasting; do not duplicate here.
     } else {
-      // fallback behaviour: show an inline toast and do no further cart logic
+      // fallback: show a toast if provider exists
       addToast?.({
         type: 'success',
         title: 'Added to cart',
         message: `${product.title} has been added to your cart.`,
         duration: 3000,
       });
-      // You could also call a local add-to-cart implementation here if desired
+      // (Optional) you could implement a local cart here
     }
   };
 

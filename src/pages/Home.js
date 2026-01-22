@@ -5,33 +5,26 @@ import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
 import ProductModal from '../components/ProductModal';
 import { useCart } from '../context/CartContext';
-
-/* Small inner component to show a confirmation toast-like message (simple) */
-function AddConfirm({ item }) {
-  if (!item) return null;
-  return (
-    <div className="position-fixed bottom-0 end-0 m-3">
-      <div className="alert alert-success py-2 px-3 shadow-sm" role="status">
-        Added <strong>{item.title}</strong> to cart
-      </div>
-    </div>
-  );
-}
+import { useToast } from '../context/ToastContext';
 
 export default function Home() {
   const [selected, setSelected] = useState(null);
-  const [recent, setRecent] = useState(null);
   const { addItem } = useCart();
+  const toast = useToast(); // toast provider is mounted at app root
 
   const handleAdd = (product) => {
     addItem(product, 1);
-    setRecent(product);
-    setTimeout(() => setRecent(null), 2200);
+
+    // show a standardized toast (use optional chaining to be safe)
+    toast?.addToast({
+      type: 'success',
+      title: 'Added to cart',
+      message: `${product.title} has been added to your cart.`,
+      duration: 3500,
+    });
   };
 
   const handlePreview = (product) => {
-    // Previously we scrolled to top here which caused page to jump.
-    // Removed window.scrollTo so modal opens in place without moving the page.
     setSelected(product);
   };
 
@@ -96,7 +89,7 @@ export default function Home() {
           <div className="col-md-8 text-center">
             <h3>Get 10% off your first order</h3>
             <p className="text-muted">Join our newsletter for product drops and promos.</p>
-            <form className="d-flex gap-2 justify-content-center" onSubmit={(e) => { e.preventDefault(); alert('Thanks! (replace with real submission)'); }}>
+            <form className="d-flex gap-2 justify-content-center" onSubmit={(e) => { e.preventDefault(); toast?.addToast({ type: 'info', title: 'Thanks!', message: 'Subscription placeholder — wire a real integration', duration: 3000 }); }}>
               <input type="email" required className="form-control w-50" placeholder="Your email" aria-label="Email address" />
               <button className="btn btn-success" type="submit">Subscribe</button>
             </form>
@@ -111,8 +104,6 @@ export default function Home() {
         onClose={() => setSelected(null)}
         onAdd={(p) => { handleAdd(p); setSelected(null); }}
       />
-
-      <AddConfirm item={recent} />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 // src/components/ProductCard.jsx
 import React from 'react';
 import placeholder from '../assets/placeholder.png';
+import { useToast } from '../context/ToastContext';
 
 /**
  * ProductCard
@@ -10,11 +11,28 @@ import placeholder from '../assets/placeholder.png';
  *  - onPreview: optional callback (product) => {}
  */
 export default function ProductCard({ product, onAdd, onPreview }) {
+  const toastCtx = (() => {
+    try {
+      return useToast();
+    } catch {
+      return null;
+    }
+  })();
+  const addToast = toastCtx?.addToast;
+
   const handleAdd = () => {
     if (typeof onAdd === 'function') {
       onAdd(product);
+      // parent will usually show toast (e.g., Home). Do not duplicate here.
     } else {
-      alert(`${product.title} added to cart (client-side stub)`);
+      // fallback behaviour: show an inline toast and do no further cart logic
+      addToast?.({
+        type: 'success',
+        title: 'Added to cart',
+        message: `${product.title} has been added to your cart.`,
+        duration: 3000,
+      });
+      // You could also call a local add-to-cart implementation here if desired
     }
   };
 

@@ -1,5 +1,6 @@
 // src/components/ProductCard.jsx
 import React from 'react';
+import placeholder from '../assets/placeholder.png';
 
 /**
  * ProductCard
@@ -28,23 +29,20 @@ export default function ProductCard({ product, onAdd, onPreview }) {
   return (
     <article className="card h-100 shadow-sm" aria-labelledby={`product-${product.id}-title`}>
       <div style={{ height: 220, overflow: 'hidden' }}>
-        <picture>
-          <source srcSet={product.image?.replace(/\.(jpe?g|png)$/i, '.webp')} type="image/webp" />
-          <img
-            src={product.image}
-            srcSet={srcSet}
-            alt={`${product.title} — ${product.short || product.description || ''}`}
-            className="card-img-top"
-            loading="lazy"
-           onError={(e) => {
-              if (!e?.target) return;
-              e.target.onerror = null;
-              e.target.src = '/products/placeholder.png';
-            }}
-            style={{ cursor: 'pointer' }}
-            onClick={handlePreview}
-          />
-        </picture>
+        <img
+          src={product.image}
+          srcSet={srcSet}
+          alt={`${product.title} — ${product.short || product.description || ''}`}
+          className="card-img-top"
+          loading="lazy"
+          onError={(e) => {
+            if (!e?.target) return;
+            e.target.onerror = null;
+            e.target.src = placeholder;
+          }}
+          style={{ cursor: 'pointer' }}
+          onClick={handlePreview}
+        />
       </div>
 
       <div className="card-body d-flex flex-column">
@@ -53,7 +51,7 @@ export default function ProductCard({ product, onAdd, onPreview }) {
         </h3>
         <p className="card-text text-muted small">
           {product.short || product.description}
-        </p> 
+        </p>
 
         <div className="mt-auto d-flex gap-2 justify-content-between align-items-center">
           <div><strong>${Number(product.price).toFixed(2)}</strong></div>

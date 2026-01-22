@@ -1,5 +1,7 @@
 // src/components/Hero.jsx
 import React from 'react';
+import heroImg from '../assets/hero-product.jpg';
+import heroPlaceholder from '../assets/hero-placeholder.png';
 
 /**
  * Hero component
@@ -46,24 +48,18 @@ export default function Hero({ onPrimaryClick }) {
         </div>
 
         <div className="col-md-6 text-center">
-          <picture>
-            <source
-              srcSet="/hero-product-1200.webp 1200w, /hero-product-768.webp 768w, /hero-product-480.webp 480w"
-              type="image/webp"
-            />
-           <img
-              src="/hero-product.jpg"            // <-- prefer .jpg as you said you added
-              alt="Everyday Tech hero product preview"
-              className="img-fluid rounded shadow-sm hero-img"
-              loading="lazy"
-              onError={(e) => {
-                if (!e?.target) return;
-                e.target.onerror = null;                     // prevent infinite loop
-                e.target.src = '/hero-placeholder.png';      // fallback file in public/
-              }}
-            />
-          </picture>
-        </div> 
+          <img
+            src={heroImg}
+            alt="Everyday Tech hero product preview"
+            className="img-fluid rounded shadow-sm hero-img"
+            loading="lazy"
+            onError={(e) => {
+              if (!e?.target) return;
+              e.target.onerror = null; // prevent infinite loop
+              e.target.src = heroPlaceholder;
+            }}
+          />
+        </div>
       </div>
     </section>
   );

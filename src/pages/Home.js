@@ -30,8 +30,9 @@ export default function Home() {
   };
 
   const handlePreview = (product) => {
+    // Previously we scrolled to top here which caused page to jump.
+    // Removed window.scrollTo so modal opens in place without moving the page.
     setSelected(product);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

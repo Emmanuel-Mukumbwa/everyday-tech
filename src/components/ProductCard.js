@@ -36,7 +36,11 @@ export default function ProductCard({ product, onAdd, onPreview }) {
             alt={`${product.title} — ${product.short || product.description || ''}`}
             className="card-img-top"
             loading="lazy"
-            onError={(e) => { e.target.src = '/products/placeholder.png'; }}
+           onError={(e) => {
+              if (!e?.target) return;
+              e.target.onerror = null;
+              e.target.src = '/products/placeholder.png';
+            }}
             style={{ cursor: 'pointer' }}
             onClick={handlePreview}
           />
@@ -49,7 +53,7 @@ export default function ProductCard({ product, onAdd, onPreview }) {
         </h3>
         <p className="card-text text-muted small">
           {product.short || product.description}
-        </p>
+        </p> 
 
         <div className="mt-auto d-flex gap-2 justify-content-between align-items-center">
           <div><strong>${Number(product.price).toFixed(2)}</strong></div>

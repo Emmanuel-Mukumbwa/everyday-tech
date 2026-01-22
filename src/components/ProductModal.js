@@ -38,5 +38,5 @@ export default function ProductModal({ product, open, onClose, onAdd }) {
         </div>
       </div>
     </div>
-  );
+  ); 
 }

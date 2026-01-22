@@ -1,7 +1,7 @@
 // src/data/products.js
 const products = [
   {
-    id: 'pb-20000',
+    id: 'pb-20000', 
     title: 'FastCharge 20K Power Bank',
     price: 39.00,
     image: '/products/pb-20000.jpg',

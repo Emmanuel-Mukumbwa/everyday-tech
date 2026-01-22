@@ -51,15 +51,19 @@ export default function Hero({ onPrimaryClick }) {
               srcSet="/hero-product-1200.webp 1200w, /hero-product-768.webp 768w, /hero-product-480.webp 480w"
               type="image/webp"
             />
-            <img
-              src="/hero-product.png"
+           <img
+              src="/hero-product.jpg"            // <-- prefer .jpg as you said you added
               alt="Everyday Tech hero product preview"
               className="img-fluid rounded shadow-sm hero-img"
               loading="lazy"
-              onError={(e) => { e.target.src = '/hero-product.png'; }}
+              onError={(e) => {
+                if (!e?.target) return;
+                e.target.onerror = null;                     // prevent infinite loop
+                e.target.src = '/hero-placeholder.png';      // fallback file in public/
+              }}
             />
           </picture>
-        </div>
+        </div> 
       </div>
     </section>
   );

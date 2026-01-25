@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+<!--
+	README for the Everyday Tech — Ecommerce Landing Page
+	Replaced the default Create React App README with project-specific information.
+-->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Everyday Tech — Ecommerce Landing Page
 
-## Available Scripts
+> A lightweight React-based ecommerce landing page built as a storefront demo. It showcases products, product modals, a cart drawer, testimonials, and a checkout page — a good starting point for an online shop front-end.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Key features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Responsive landing page with product listing and product detail modal
+- Add/remove items to a cart and view them in a slide-out cart drawer
+- Toast notifications for user actions (add to cart, remove, checkout)
+- Simple checkout page (front-end only) and product data driven from `src/data/products.js`
+- Component-based structure for easy customization: `Navbar`, `Hero`, `ProductCard`, `ProductModal`, `CartWidget`, `CartDrawer`, `Testimonials`, `Footer`, etc.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech stack
 
-### `npm test`
+- React (Create React App)
+- Plain CSS (project-level styles in `src/styles` and component CSS in `src`)
+- No backend: demo uses local data in `src/data/products.js`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Quick start
 
-### `npm run build`
+1. Install dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```powershell
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Start development server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```powershell
+npm start
+```
 
-### `npm run eject`
+3. Open http://localhost:3000 in your browser. The app supports hot-reload when you edit files.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. Create a production build
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```powershell
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Notes:
+- Tests: `npm test` (if present) will run the Create React App test runner.
+- Eject: `npm run eject` is available but irreversible.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project structure (important files)
 
-## Learn More
+- `public/` — static assets and `index.html`
+- `src/` — main app source
+	- `App.js`, `index.js` — entry points
+	- `assets/` — images and media
+	- `components/` — UI components (CartDrawer, ProductCard, ProductModal, etc.)
+	- `context/` — React contexts (`CartContext.js`, `ToastContext.js`)
+	- `data/` — demo data (`products.js`)
+	- `pages/` — route pages (`Home.js`, `Checkout.js`)
+	- `styles/` — global and utility CSS
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## How the app works (high level)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The home page (`src/pages/Home.js`) renders the `Hero`, a product grid built from `src/data/products.js`, and other sections such as testimonials and footer.
+- Clicking a product opens `ProductModal` (details + add to cart).
+- Clicking the cart icon opens `CartDrawer` which reads and updates `CartContext`.
+- `ToastContext` is used for short notifications (item added/removed).
 
-### Code Splitting
+## Customization ideas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Hook up a backend API for product & cart persistence
+- Add product categories, filters and search
+- Add authentication and user accounts
+- Replace demo product images with real assets
 
-### Analyzing the Bundle Size
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. Fork the repo and create a feature branch
+2. Make changes and add tests where appropriate
+3. Open a pull request describing the change
 
-### Making a Progressive Web App
+Please keep changes small and focused. If you want to add a larger feature, open an issue first to discuss design.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## License
 
-### Advanced Configuration
+This repository is unlicensed by default. If you want to use an open-source license, consider adding an `LICENSE` file (for example `MIT`).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contact
 
-### Deployment
+If you have questions about the project, open an issue or contact the repository owner.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

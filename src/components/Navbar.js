@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <header>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
         <div className="container">
           <a className="navbar-brand fw-bold" href="/">Everyday Tech</a>
 
